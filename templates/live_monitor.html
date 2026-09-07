@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Live Monitor{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Real-Time</div>
+    <h1 class="page-title">Live Monitor</h1>
+    <p class="page-desc">Face detection &amp; recognition, unknown-person alerting, and suspicious movement tracking — all running on this single feed.</p>
+  </div>
+  <div class="radar"></div>
+</div>
+
+{% if not recognizer_ready %}
+<div class="flash flash-error section-gap" style="margin-bottom:20px;">
+  No trained faces found yet. Recognized faces will show as "UNKNOWN" until you enroll at least one person and the recognizer trains.
+</div>
+{% endif %}
+
+<div class="grid grid-2">
+  <div class="video-wrap">
+    <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+    <img src="{{ url_for('live_feed') }}" alt="Live surveillance feed">
+  </div>
+
+  <div class="card">
+    <div class="card-title">Legend</div>
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13.5px;">
+      <div style="display:flex; align-items:center; gap:10px;"><span style="width:14px;height:14px;border-radius:3px;background:var(--accent-teal);display:inline-block;"></span> Recognized person — attendance marked</div>
+      <div style="display:flex; align-items:center; gap:10px;"><span style="width:14px;height:14px;border-radius:3px;background:var(--accent-red);display:inline-block;"></span> Unknown face — alert raised after sustained detection</div>
+      <div style="display:flex; align-items:center; gap:10px;"><span style="width:14px;height:14px;border-radius:3px;background:var(--accent-amber);display:inline-block;"></span> Suspicious / large-scale movement in frame</div>
+    </div>
+    <div class="section-gap">
+      <button class="btn btn-danger btn-block" id="stopBtn">Stop Camera</button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('stopBtn').addEventListener('click', () => {
+  fetch("{{ url_for('stop_camera') }}", { method: 'POST' }).then(() => location.reload());
+});
+</script>
+{% endblock %}

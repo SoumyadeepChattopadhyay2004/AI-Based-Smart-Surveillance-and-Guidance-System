@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Attendance Log{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Records</div>
+    <h1 class="page-title">Attendance Log</h1>
+    <p class="page-desc">Facial-scan attendance entries, filterable by date.</p>
+  </div>
+  <form method="GET" class="field" style="margin:0;">
+    <input type="date" name="date" value="{{ date_str }}" onchange="this.form.submit()">
+  </form>
+</div>
+
+<div class="card">
+  {% if rows %}
+  <table>
+    <thead><tr><th>Time</th><th>Name</th><th>Unique ID</th><th>Confidence</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td class="mono">{{ r.time_in }}</td>
+        <td>{{ r.name }}</td>
+        <td class="mono">{{ r.unique_id }}</td>
+        <td class="mono">{{ "%.1f"|format(r.confidence) if r.confidence is not none else '—' }}</td>
+        <td><span class="badge badge-teal">PRESENT</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No attendance recorded for {{ date_str }}.</div>
+  {% endif %}
+</div>
+
+{% endblock %}

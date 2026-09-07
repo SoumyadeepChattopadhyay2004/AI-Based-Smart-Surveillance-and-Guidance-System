@@ -1,0 +1,141 @@
+/* ===========================================================
+   SENTRY — Landing / Login / Signup page styles
+   Reuses design tokens from style.css (:root vars, .btn, .card, .field)
+   =========================================================== */
+
+.lp-navbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 6vw;
+  background: rgba(11,14,20,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.lp-brand { display: flex; align-items: center; gap: 10px; }
+.lp-brand-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; }
+.lp-brand-sub { font-size: 10.5px; color: var(--text-muted); letter-spacing: 0.3px; }
+
+.lp-nav-links { display: flex; align-items: center; gap: 28px; }
+.lp-nav-links a { font-size: 13.5px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+.lp-nav-links a:hover { color: var(--accent-teal); }
+
+.lp-nav-auth { display: flex; align-items: center; gap: 10px; }
+
+@media (max-width: 860px) {
+  .lp-nav-links { display: none; }
+}
+
+/* ---------------- Hero ---------------- */
+.lp-hero {
+  padding: 90px 6vw 70px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.lp-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 1px;
+  color: var(--accent-teal); background: rgba(0,217,192,0.08);
+  border: 1px solid rgba(0,217,192,0.25); border-radius: 100px;
+  padding: 6px 14px; margin-bottom: 22px;
+}
+.lp-hero h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(32px, 5vw, 54px); line-height: 1.12; margin: 0 0 20px;
+}
+.lp-hero h1 span { color: var(--accent-teal); }
+.lp-hero p {
+  font-size: 16px; line-height: 1.7; color: var(--text-muted);
+  max-width: 640px; margin: 0 auto 34px;
+}
+.lp-hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-lg { padding: 14px 28px; font-size: 14.5px; border-radius: 10px; }
+
+/* ---------------- Sections ---------------- */
+.lp-section { padding: 70px 6vw; max-width: 1180px; margin: 0 auto; scroll-margin-top: 80px; }
+.lp-section-head { text-align: center; max-width: 620px; margin: 0 auto 44px; }
+.lp-section-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--accent-teal); text-transform: uppercase; }
+.lp-section-head h2 { font-family: var(--font-display); font-size: clamp(24px, 3vw, 32px); margin: 8px 0 12px; }
+.lp-section-head p { color: var(--text-muted); font-size: 14.5px; line-height: 1.6; }
+
+/* ---------------- Features grid ---------------- */
+.lp-features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+}
+@media (max-width: 860px) { .lp-features-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .lp-features-grid { grid-template-columns: 1fr; } }
+
+.lp-feature-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px; transition: border-color 0.15s, transform 0.15s;
+}
+.lp-feature-card:hover { border-color: var(--accent-teal); transform: translateY(-2px); }
+.lp-feature-icon {
+  width: 38px; height: 38px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,217,192,0.1); color: var(--accent-teal);
+  margin-bottom: 14px; font-size: 18px;
+}
+.lp-feature-card h3 { font-size: 15px; margin: 0 0 8px; font-family: var(--font-display); }
+.lp-feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+/* ---------------- Technology ---------------- */
+.lp-tech-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+@media (max-width: 860px) { .lp-tech-grid { grid-template-columns: 1fr 1fr; } }
+.lp-tech-chip {
+  background: var(--panel-alt); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px; text-align: center;
+}
+.lp-tech-chip .name { font-family: var(--font-mono); font-size: 13px; color: var(--text); font-weight: 600; }
+.lp-tech-chip .role { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+
+/* ---------------- About ---------------- */
+.lp-about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 860px) { .lp-about { grid-template-columns: 1fr; } }
+.lp-about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lp-stat { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+.lp-stat .num { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--accent-teal); }
+.lp-stat .label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.lp-about p { color: var(--text-muted); line-height: 1.75; font-size: 14.5px; }
+
+/* ---------------- Contact ---------------- */
+.lp-contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) { .lp-contact-grid { grid-template-columns: 1fr; } }
+.lp-contact-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px; text-align: center;
+}
+.lp-contact-card .lp-feature-icon { margin: 0 auto 14px; }
+.lp-contact-card a { color: var(--accent-teal); font-size: 13.5px; word-break: break-word; }
+
+/* ---------------- Footer ---------------- */
+.lp-footer {
+  border-top: 1px solid var(--border); padding: 26px 6vw;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  color: var(--text-muted); font-size: 12.5px;
+}
+
+/* ---------------- Auth pages (login/signup) ---------------- */
+.auth-shell {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(0,217,192,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(0,217,192,0.05) 0%, transparent 45%),
+    var(--bg);
+}
+.auth-card {
+  width: 100%; max-width: 400px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  padding: 34px 30px;
+}
+.auth-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; justify-content: center; }
+.auth-card h1 { font-family: var(--font-display); font-size: 21px; text-align: center; margin: 0 0 6px; }
+.auth-card .auth-sub { text-align: center; color: var(--text-muted); font-size: 13px; margin: 0 0 26px; }
+.auth-foot { text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 18px; }
+.auth-foot a { color: var(--accent-teal); font-weight: 600; }
+.auth-back { display: block; text-align: center; margin-top: 16px; font-size: 12.5px; color: var(--text-muted); }
+.auth-back:hover { color: var(--accent-teal); }

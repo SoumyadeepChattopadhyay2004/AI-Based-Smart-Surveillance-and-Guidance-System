@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login · SENTRY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="13" r="11" stroke="var(--accent-teal)" stroke-width="1.5"/>
+        <circle cx="13" cy="13" r="3.2" fill="var(--accent-teal)"/>
+        <line x1="13" y1="1" x2="13" y2="5" stroke="var(--accent-teal)" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <h1>Welcome back</h1>
+    <p class="auth-sub">Log in to access the SENTRY dashboard.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" required autofocus>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+
+    <div class="auth-foot">Don't have an account? <a href="{{ url_for('signup') }}">Register</a></div>
+    <a href="{{ url_for('landing') }}" class="auth-back">← Back to homepage</a>
+  </div>
+</div>
+</body>
+</html>

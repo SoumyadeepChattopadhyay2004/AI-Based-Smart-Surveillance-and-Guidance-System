@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENTRY · AI-Based Smart Surveillance and Guidance System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body>
+
+<nav class="lp-navbar">
+  <a href="#home" class="lp-brand">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <circle cx="13" cy="13" r="11" stroke="var(--accent-teal)" stroke-width="1.5"/>
+      <circle cx="13" cy="13" r="3.2" fill="var(--accent-teal)"/>
+      <line x1="13" y1="1" x2="13" y2="5" stroke="var(--accent-teal)" stroke-width="1.5"/>
+    </svg>
+    <div>
+      <div class="lp-brand-name">SENTRY</div>
+      <div class="lp-brand-sub">Smart Surveillance &amp; Guidance</div>
+    </div>
+  </a>
+
+  <div class="lp-nav-links">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#technology">Technology</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <div class="lp-nav-auth">
+    <a href="{{ url_for('login') }}" class="btn">Login</a>
+    <a href="{{ url_for('signup') }}" class="btn btn-primary">Register</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO / HOME ===================== -->
+<section id="home" class="lp-hero">
+  <span class="lp-eyebrow">● SYSTEM ONLINE — AI SURVEILLANCE PROTOTYPE</span>
+  <h1>Watch, recognize, and understand<br>your space with <span>SENTRY</span>.</h1>
+  <p>
+    SENTRY is an AI-based smart surveillance and guidance system that combines
+    live face recognition, suspicious-movement detection, mood tracking, and
+    hand-gesture recognition into a single themed dashboard — with AI-generated
+    alert summaries and attendance logging, all backed by MongoDB Atlas.
+  </p>
+  <div class="lp-hero-actions">
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Explore Dashboard →</a>
+    <a href="{{ url_for('signup') }}" class="btn btn-lg">Create an Account</a>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="features" class="lp-section">
+  <div class="lp-section-head">
+    <span class="lp-section-tag">Capabilities</span>
+    <h2>Everything a monitored space needs</h2>
+    <p>One live camera feed, five kinds of intelligence layered on top.</p>
+  </div>
+  <div class="lp-features-grid">
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">👤</div>
+      <h3>Face Recognition Attendance</h3>
+      <!-- <p>Enrolls a person from 30 live samples and marks attendance automatically when they're recognized on camera.</p> -->
+    </div>
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">🚨</div>
+      <h3>Unknown Person Alerts</h3>
+      <!-- <p>Sustained detection of an unrecognized face raises a high-severity alert with a saved snapshot.</p> -->
+    </div>
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">🏃</div>
+      <h3>Suspicious Movement Tracker</h3>
+      <!-- <p>Background-subtraction motion analysis flags large or rapid movement in the frame.</p> -->
+    </div>
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">🙂</div>
+      <h3>Mood Detection</h3>
+      <!-- <p>Classifies each face into 8 moods via an ONNX FER+ model, and alerts on sustained anger or anxiety.</p> -->
+    </div>
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">✋</div>
+      <h3>Hand Gesture Recognition</h3>
+      <!-- <p>MediaPipe-powered gesture detection — an open palm held toward the camera can raise a help/stop alert.</p> -->
+    </div>
+    <div class="lp-feature-card">
+      <div class="lp-feature-icon">📊</div>
+      <h3>Live Dashboard &amp; Analytics</h3>
+      <!-- <p>Attendance trends, alert breakdowns, and an AI-generated daily summary, all in one themed control room.</p> -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TECHNOLOGY ===================== -->
+<section id="technology" class="lp-section">
+  <div class="lp-section-head">
+    <span class="lp-section-tag">Under the hood</span>
+    <h2>Built on a lightweight, dependency-friendly stack</h2>
+    <p>No compiled face-recognition libraries, no heavyweight ML frameworks — just OpenCV, a small ONNX model, and cloud storage.</p>
+  </div>
+  <div class="lp-tech-grid">
+    <div class="lp-tech-chip"><div class="name">Flask</div><div class="role">Backend &amp; MJPEG streaming</div></div>
+    <div class="lp-tech-chip"><div class="name">OpenCV</div><div class="role">Haar detection + LBPH recognition</div></div>
+    <div class="lp-tech-chip"><div class="name">MongoDB Atlas</div><div class="role">Cloud database + GridFS storage</div></div>
+    <div class="lp-tech-chip"><div class="name">Groq LLM</div><div class="role">AI-generated alert text</div></div>
+    <div class="lp-tech-chip"><div class="name">ONNX FER+</div><div class="role">Facial mood classification</div></div>
+    <div class="lp-tech-chip"><div class="name">MediaPipe</div><div class="role">Hand gesture landmarks</div></div>
+    <div class="lp-tech-chip"><div class="name">Chart.js</div><div class="role">Dashboard analytics</div></div>
+    <div class="lp-tech-chip"><div class="name">Jinja2</div><div class="role">Server-rendered UI</div></div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="lp-section">
+  <div class="lp-about">
+    <div>
+      <span class="lp-section-tag">About the project</span>
+      <h2 style="font-family: var(--font-display); font-size: clamp(22px,3vw,28px); margin: 8px 0 14px;">A functional prototype for a monitored, single-camera space</h2>
+      <p>
+        SENTRY is built for a controlled setting — a classroom, lab, or office
+        desk — where one camera needs to handle attendance, recognize
+        unfamiliar faces, watch for unusual movement, and read the room's
+        mood, without depending on heavy ML infrastructure. Detection results
+        are turned into short, human-readable alerts, and every event is
+        logged for later review on the dashboard.
+      </p>
+    </div>
+    <div class="lp-about-stats">
+      <div class="lp-stat"><div class="num">8</div><div class="label">Moods detected</div></div>
+      <div class="lp-stat"><div class="num">6</div><div class="label">Hand gestures recognized</div></div>
+      <div class="lp-stat"><div class="num">4</div><div class="label">Alert types</div></div>
+      <div class="lp-stat"><div class="num">1</div><div class="label">Camera required</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="lp-section">
+  <div class="lp-section-head">
+    <span class="lp-section-tag">Get in touch</span>
+    <h2>Questions about SENTRY?</h2>
+    <p>Reach out through any of the channels below.</p>
+  </div>
+  <div class="lp-contact-grid">
+    <div class="lp-contact-card">
+      <div class="lp-feature-icon">✉️</div>
+      <h3>Email</h3>
+      <a href="mailto:soumyadeepchattopadhyay001@gmail.com , das.soumyadeep23@gmail.com">soumyadeepchattopadhyay001@gmail.com , das.soumyadeep23@gmail.com</a>
+    </div>
+    <div class="lp-contact-card">
+      <div class="lp-feature-icon">💬</div>
+      <h3>Project Repo</h3>
+      <a href="#">View source / documentation</a>
+    </div>
+    <div class="lp-contact-card">
+      <div class="lp-feature-icon">🔐</div>
+      <h3>Access</h3>
+      <a href="{{ url_for('signup') }}">Register for a dashboard account</a>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer">
+  <span>© 2026 SENTRY — Smart Surveillance &amp; Guidance System</span>
+  <span>Academic prototype · Not a production security system</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Capture Face Samples{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Enrollment · Step 2</div>
+    <h1 class="page-title">Capturing Face Samples — {{ user.name }}</h1>
+    <p class="page-desc">Look at the camera and slowly turn your head left/right so the system captures varied angles. This closes automatically at {{ samples_needed }} samples.</p>
+  </div>
+</div>
+
+<div class="grid grid-2">
+  <div class="video-wrap">
+    <span class="live-badge"><span class="live-dot"></span> CAPTURING</span>
+    <img src="{{ url_for('capture_feed', user_id=user.id) }}" alt="Face capture feed">
+  </div>
+  <div class="card">
+    <div class="card-title">Instructions</div>
+    <ul style="font-size: 13.5px; line-height: 1.9; color: var(--text-muted); padding-left: 18px; margin:0;">
+      <li>Ensure good, even lighting on your face</li>
+      <li>Keep only one face in frame</li>
+      <li>Slowly tilt/turn your head during capture</li>
+      <li>Model trains automatically once done</li>
+    </ul>
+    <a href="{{ url_for('users_page') }}" class="btn btn-block section-gap" style="margin-top:20px;">Done — View Registered Faces</a>
+  </div>
+</div>
+
+{% endblock %}

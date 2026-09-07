@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Enroll Person{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Enrollment</div>
+    <h1 class="page-title">Register a New Person</h1>
+    <p class="page-desc">Add someone's details first, then capture face samples so the system can recognize them for attendance.</p>
+  </div>
+</div>
+
+<div class="card form-card">
+  <form method="POST" action="{{ url_for('register') }}">
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" name="name" placeholder="e.g. Ananya Roy" required>
+    </div>
+    <div class="field">
+      <label>Unique ID (Roll No. / Employee ID)</label>
+      <input type="text" name="unique_id" placeholder="e.g. CSE2023045" required>
+    </div>
+    <div class="field">
+      <label>Email (optional)</label>
+      <input type="email" name="email" placeholder="name@example.com">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Continue to Face Capture →</button>
+  </form>
+</div>
+
+{% endblock %}

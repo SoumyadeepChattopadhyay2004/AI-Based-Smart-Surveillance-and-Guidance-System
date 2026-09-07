@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %}Alerts{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Security</div>
+    <h1 class="page-title">Alerts &amp; Movement Log</h1>
+    <p class="page-desc">Unknown-person detections and suspicious movement events, with AI-generated descriptions.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title" style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Alerts</span>
+    {% if alerts %}
+    <button class="btn btn-danger" onclick="clearAll('alerts')">Clear All</button>
+    {% endif %}
+  </div>
+  {% if alerts %}
+  <table>
+    <thead><tr><th>Time</th><th>Type</th><th>Severity</th><th>Description</th><th>Status</th><th></th></tr></thead>
+    <tbody id="alerts-tbody">
+      {% for a in alerts %}
+      <tr id="alert-{{ a.id }}">
+        <td class="mono">{{ a.timestamp.replace('T', ' ').split('.')[0] }}</td>
+        <td>{{ 'Unknown Person' if a.alert_type == 'unknown_person' else 'Suspicious Movement' }}</td>
+        <td>
+          {% if a.severity == 'high' %}<span class="badge badge-red">HIGH</span>
+          {% elif a.severity == 'medium' %}<span class="badge badge-amber">MEDIUM</span>
+          {% else %}<span class="badge badge-muted">LOW</span>{% endif %}
+        </td>
+        <td style="max-width:340px;">{{ a.description }}</td>
+        <td>
+          {% if a.acknowledged %}<span class="badge badge-teal">ACKNOWLEDGED</span>
+          {% else %}<span class="badge badge-muted">NEW</span>{% endif %}
+        </td>
+        <td style="white-space:nowrap;">
+          {% if not a.acknowledged %}
+          <button class="btn" onclick="ackAlert({{ a.id }})">Acknowledge</button>
+          {% endif %}
+          <button class="btn btn-danger" onclick="deleteRow('alerts', {{ a.id }})">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No alerts recorded.</div>
+  {% endif %}
+</div>
+
+<div class="card section-gap">
+  <div class="card-title" style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Movement Log</span>
+    {% if movement_logs %}
+    <button class="btn btn-danger" onclick="clearAll('movement_logs')">Clear All</button>
+    {% endif %}
+  </div>
+  {% if movement_logs %}
+  <table>
+    <thead><tr><th>Time</th><th>Zone</th><th>Frame Coverage</th><th>Description</th><th></th></tr></thead>
+    <tbody id="movement_logs-tbody">
+      {% for m in movement_logs %}
+      <tr id="movement_logs-{{ m.id }}">
+        <td class="mono">{{ m.timestamp.replace('T', ' ').split('.')[0] }}</td>
+        <td>{{ m.zone }}</td>
+        <td class="mono">{{ "%.1f"|format(m.area_ratio * 100) }}%</td>
+        <td>{{ m.description }}</td>
+        <td>
+          <button class="btn btn-danger" onclick="deleteRow('movement_logs', {{ m.id }})">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No movement events recorded.</div>
+  {% endif %}
+</div>
+
+{% if mood_logs is defined %}
+<div class="card section-gap">
+  <div class="card-title" style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Mood Log</span>
+    {% if mood_logs %}
+    <button class="btn btn-danger" onclick="clearAll('mood_logs')">Clear All</button>
+    {% endif %}
+  </div>
+  {% if mood_logs %}
+  <table>
+    <thead><tr><th>Time</th><th>Person</th><th>Mood</th><th>Confidence</th><th></th></tr></thead>
+    <tbody id="mood_logs-tbody">
+      {% for mo in mood_logs %}
+      <tr id="mood_logs-{{ mo.id }}">
+        <td class="mono">{{ mo.timestamp.replace('T', ' ').split('.')[0] }}</td>
+        <td>{{ mo.user_name or 'Unknown' }}</td>
+        <td>{{ mo.emotion }}</td>
+        <td class="mono">{{ "%.0f"|format(mo.confidence * 100) }}%</td>
+        <td>
+          <button class="btn btn-danger" onclick="deleteRow('mood_logs', {{ mo.id }})">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No mood events recorded.</div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if gesture_logs is defined %}
+<div class="card section-gap">
+  <div class="card-title" style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Gesture Log</span>
+    {% if gesture_logs %}
+    <button class="btn btn-danger" onclick="clearAll('gesture_logs')">Clear All</button>
+    {% endif %}
+  </div>
+  {% if gesture_logs %}
+  <table>
+    <thead><tr><th>Time</th><th>Gesture</th><th></th></tr></thead>
+    <tbody id="gesture_logs-tbody">
+      {% for g in gesture_logs %}
+      <tr id="gesture_logs-{{ g.id }}">
+        <td class="mono">{{ g.timestamp.replace('T', ' ').split('.')[0] }}</td>
+        <td>{{ g.gesture }}</td>
+        <td>
+          <button class="btn btn-danger" onclick="deleteRow('gesture_logs', {{ g.id }})">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No gesture events recorded.</div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function ackAlert(id) {
+  fetch(`/alerts/ack/${id}`, { method: 'POST' }).then(() => {
+    document.getElementById(`alert-${id}`).querySelector('td:nth-last-child(2)').innerHTML = '<span class="badge badge-teal">ACKNOWLEDGED</span>';
+    const btn = document.getElementById(`alert-${id}`).querySelector('td:last-child button:not(.btn-danger)');
+    if (btn) btn.remove();
+  });
+}
+
+// endpoint prefix per log type, e.g. "alerts" -> /alerts/delete/<id>, /alerts/clear
+const ENDPOINT_PREFIX = {
+  alerts: 'alerts',
+  movement_logs: 'movement_logs',
+  mood_logs: 'mood_logs',
+  gesture_logs: 'gesture_logs',
+};
+
+function deleteRow(kind, id) {
+  if (!confirm('Delete this entry?')) return;
+  const prefix = ENDPOINT_PREFIX[kind];
+  fetch(`/${prefix}/delete/${id}`, { method: 'POST' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'ok') {
+        const row = document.getElementById(`${kind === 'alerts' ? 'alert' : kind}-${id}`);
+        if (row) row.remove();
+      }
+    });
+}
+
+function clearAll(kind) {
+  if (!confirm('Delete ALL entries in this table? This cannot be undone.')) return;
+  const prefix = ENDPOINT_PREFIX[kind];
+  fetch(`/${prefix}/clear`, { method: 'POST' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'ok') {
+        location.reload();
+      }
+    });
+}
+</script>
+{% endblock %}

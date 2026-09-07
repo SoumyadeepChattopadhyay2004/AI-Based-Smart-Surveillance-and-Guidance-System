@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Registered Faces{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Directory</div>
+    <h1 class="page-title">Registered Faces</h1>
+    <p class="page-desc">Everyone enrolled in the facial recognition system.</p>
+  </div>
+  <div style="display:flex; gap:10px;">
+    <form method="POST" action="{{ url_for('retrain') }}">
+      <button type="submit" class="btn">Retrain Recognizer</button>
+    </form>
+    <a href="{{ url_for('register') }}" class="btn btn-primary">+ Enroll Person</a>
+  </div>
+</div>
+
+<div class="card">
+  {% if users %}
+  <table>
+    <thead><tr><th>Name</th><th>Unique ID</th><th>Email</th><th>Enrolled</th><th></th></tr></thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.name }}</td>
+        <td class="mono">{{ u.unique_id }}</td>
+        <td class="mono">{{ u.email or '—' }}</td>
+        <td class="mono">{{ u.created_at.split('T')[0] }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('delete_user', user_id=u.id) }}" onsubmit="return confirm('Remove this person and all their face data?');">
+            <button type="submit" class="btn btn-danger">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No one enrolled yet. <a href="{{ url_for('register') }}" style="color:var(--accent-teal);">Enroll your first person →</a></div>
+  {% endif %}
+</div>
+
+{% endblock %}
