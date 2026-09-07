@@ -45,7 +45,7 @@ PORT = 5000
 #     export MONGODB_URI="mongodb+srv://<user>:<password>@<cluster>.mongodb.net/"
 # or paste it below (not recommended for shared / production code).
 MONGODB_URI = os.environ.get(
-    "MONGODB_URI", "mongodb+srv://<user>:<password>@<cluster>.mongodb.net/"
+    "MONGODB_URI", "mongodb+srv://soumyadeepchattopadhyay001_db_user:8VGFbHwRK2JadwXh@campus.2avrofm.mongodb.net/?appName=campus"
 )
 MONGODB_DB_NAME = os.environ.get("MONGODB_DB_NAME", "smart_surveillance")
 
